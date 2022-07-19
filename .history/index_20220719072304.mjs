@@ -5,3 +5,5 @@ const bal = stdlib.parseCurrency(100);
 const accA = await stdlib.newTestAccount(bal);
 const ctcA = accA.contract(backend);
 await ctcA.p.A({});
+
+''
