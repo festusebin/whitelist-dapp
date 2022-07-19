@@ -24,7 +24,7 @@ export const main = Reach.App(() => {
     endContract: Fun([], Bool),
   });
 
-  const B = View({
+  const V = View({
     canClaimTokens: Fun([Address], Bool),
     getTokenInfo: Token,
   });
@@ -46,15 +46,15 @@ export const main = Reach.App(() => {
 
   const whitelist = new Map(Bool);
 
-  B.canClaimTokens.set((m) => myFromMaybe(whitelist[m]));
-  B.getTokenInfo.set(ClaimToken);
+  V.canClaimTokens.set((m) => myFromMaybe(whitelist[m]));
+  V.getTokenInfo.set(ClaimToken);
 
   const [ done, distrubtedTokens, whitelistSize ] = parallelReduce([ false, 0, 0 ])
       .invariant(whitelistSize <= MaxAddresses)
       .while(!done)
       .api(
         UserAPI.addToWhitelist,
-        () => {},
+        () => { /* TODO document why this arrow function is empty */ },
         () => 0,
         (returnFunc) => {
           const canAdd = (whitelistSize < MaxAddresses) ? true : false;

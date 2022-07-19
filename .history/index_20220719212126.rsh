@@ -24,7 +24,7 @@ export const main = Reach.App(() => {
     endContract: Fun([], Bool),
   });
 
-  const B = View({
+  const V = View({
     canClaimTokens: Fun([Address], Bool),
     getTokenInfo: Token,
   });

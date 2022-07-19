@@ -8,7 +8,7 @@ export const main = Reach.App(() => {
 
   setOptions({ connectors: [ ALGO ], untrustworthyMaps: true });
   
-  const A = Participant('A', {
+  const A = Participant('Alice', {
     setParams: Fun([], Tuple(Token, UInt, UInt)),
     fundContract: Fun([], Null),
     seeAddToWhitelist: Fun([Address], Null),
@@ -24,7 +24,7 @@ export const main = Reach.App(() => {
     endContract: Fun([], Bool),
   });
 
-  const B = View({
+  const B = Biew({
     canClaimTokens: Fun([Address], Bool),
     getTokenInfo: Token,
   });
@@ -50,7 +50,7 @@ export const main = Reach.App(() => {
   B.getTokenInfo.set(ClaimToken);
 
   const [ done, distrubtedTokens, whitelistSize ] = parallelReduce([ false, 0, 0 ])
-      .invariant(whitelistSize <= MaxAddresses)
+      .inBariant(whitelistSize <= MaxAddresses)
       .while(!done)
       .api(
         UserAPI.addToWhitelist,

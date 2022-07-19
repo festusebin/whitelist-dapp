@@ -4,7 +4,7 @@ const stdlib = loadStdlib(process.env);
 
 (async () => {
   const startingBalance = stdlib.parseCurrency(100);
-
+  
   const getBalance = async (who) => stdlib.formatCurrency(await stdlib.balanceOf(who), 4);
 
   const acc = await stdlib.newTestAccount(startingBalance);
@@ -13,9 +13,9 @@ const stdlib = loadStdlib(process.env);
   console.log(`Account ${addr} has been generated.`);
   console.log(`Account has been generated with ${await getBalance(acc)} tokens and address ${addr}`);
 
-  const isAlice = await ask.ask(`Are you deploying the contract?`,ask.yesno);
+  const isA = await ask.ask(`Are you deploying the contract?`,ask.yesno);
 
-  if (isAlice) {
+  if (isA) {
     const maxAddr = parseInt(await ask.ask(`How many addresses may be added to the whitelist?`));
     const tokPerAddress = parseInt(await ask.ask(`How many tokens may be claimed per address?`));
 

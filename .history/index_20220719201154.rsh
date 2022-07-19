@@ -21,12 +21,12 @@ export const main = Reach.App(() => {
   });
 
   const AdminAPI = API('AdminAPI', {
-    endContract: Fun([], Bool),
+    endContract: Fun([], Bool), // exit parallelReduce and end contract
   });
 
-  const B = View({
-    canClaimTokens: Fun([Address], Bool),
-    getTokenInfo: Token,
+  const V = View({
+    canClaimTokens: Fun([Address], Bool), // view whether an address is in the whitelist, True = Available to claim, False = Not available
+    getTokenInfo: Token, // view to see what token we're claiming
   });
 
   init();
@@ -44,10 +44,11 @@ export const main = Reach.App(() => {
   A.interact.fundContract();
   A.publish();
 
-  const whitelist = new Map(Bool);
+  // Map to track whitelisted addresses
+  const whitelist = new Map(Bool); // True = Available to claim, False = No longer available to claim
 
-  B.canClaimTokens.set((m) => myFromMaybe(whitelist[m]));
-  B.getTokenInfo.set(ClaimToken);
+  V.canClaimTokens.set((m) => myFromMaybe(whitelist[m]));
+  V.getTokenInfo.set(ClaimToken);
 
   const [ done, distrubtedTokens, whitelistSize ] = parallelReduce([ false, 0, 0 ])
       .invariant(whitelistSize <= MaxAddresses)

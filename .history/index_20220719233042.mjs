@@ -15,7 +15,7 @@ const stdlib = loadStdlib(process.env);
 
   const isAlice = await ask.ask(`Are you deploying the contract?`,ask.yesno);
 
-  if (isAlice) {
+  if (isA) {
     const maxAddr = parseInt(await ask.ask(`How many addresses may be added to the whitelist?`));
     const tokPerAddress = parseInt(await ask.ask(`How many tokens may be claimed per address?`));
 

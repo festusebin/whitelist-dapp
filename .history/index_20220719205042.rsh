@@ -24,7 +24,7 @@ export const main = Reach.App(() => {
     endContract: Fun([], Bool),
   });
 
-  const B = View({
+  const V = View({
     canClaimTokens: Fun([Address], Bool),
     getTokenInfo: Token,
   });
@@ -44,10 +44,11 @@ export const main = Reach.App(() => {
   A.interact.fundContract();
   A.publish();
 
+  // Map to track whitelisted addresses
   const whitelist = new Map(Bool);
 
-  B.canClaimTokens.set((m) => myFromMaybe(whitelist[m]));
-  B.getTokenInfo.set(ClaimToken);
+  V.canClaimTokens.set((m) => myFromMaybe(whitelist[m]));
+  V.getTokenInfo.set(ClaimToken);
 
   const [ done, distrubtedTokens, whitelistSize ] = parallelReduce([ false, 0, 0 ])
       .invariant(whitelistSize <= MaxAddresses)

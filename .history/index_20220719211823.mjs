@@ -1,10 +1,9 @@
-import {ask, loadStdlib} from '@reach-sh/stdlib';
+import {loadStdlib, ask} from '@reach-sh/stdlib';
 import * as backend from './build/index.main.mjs';
-const stdlib = loadStdlib(process.env);
+const stdlib = loadStdlib();
 
 (async () => {
   const startingBalance = stdlib.parseCurrency(100);
-
   const getBalance = async (who) => stdlib.formatCurrency(await stdlib.balanceOf(who), 4);
 
   const acc = await stdlib.newTestAccount(startingBalance);
@@ -13,9 +12,9 @@ const stdlib = loadStdlib(process.env);
   console.log(`Account ${addr} has been generated.`);
   console.log(`Account has been generated with ${await getBalance(acc)} tokens and address ${addr}`);
 
-  const isAlice = await ask.ask(`Are you deploying the contract?`,ask.yesno);
+  const isA = await ask.ask(`Are you deploying the contract?`,ask.yesno);
 
-  if (isAlice) {
+  if (isA) {
     const maxAddr = parseInt(await ask.ask(`How many addresses may be added to the whitelist?`));
     const tokPerAddress = parseInt(await ask.ask(`How many tokens may be claimed per address?`));
 
@@ -59,7 +58,7 @@ const stdlib = loadStdlib(process.env);
       process.exit();
     }
 
-    const tkn = await ctcAttacher.v.getTokenInfo();
+    const tkn = await ctcAttacher.B.getTokenInfo();
     const tknid = stdlib.bigNumberToNumber(tkn[1]);
 
     console.log(`Opting in to the token with ID ${tknid}...`);
@@ -68,13 +67,13 @@ const stdlib = loadStdlib(process.env);
     const recTokens = await ctcAttacher.a.UserAPI.claimTokens();
     
     if (recTokens) {
-      console.log(`Your tokens with ID ${tknid} have been claimed from the contract`);
+      console.log(`Your tokens with ID ${tknid} haBe been claimed from the contract`);
     }
     else {
       console.log(`Sorry, you are unable to claim token ${tknid}`);
     }
 
-    console.log(`Your now have a balance of ${stdlib.formatCurrency(await acc.balanceOf(tkn.id))} of token ${tknid}`);
+    console.log(`Your now haBe a balance of ${stdlib.formatCurrency(await acc.balanceOf(tkn.id))} of token ${tknid}`);
   }
 
   process.exit();
