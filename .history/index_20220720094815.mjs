@@ -12,9 +12,9 @@ const stdlib = loadStdlib();
   console.log(`Account ${addr} has been generated.`);
   console.log(`Account has been generated with ${await getBalance(acc)} tokens and address ${addr}`);
 
-  const isDeployer = await ask.ask(`Are you deploying the contract?`,ask.yesno);
+  const isAlice = await ask.ask(`Are you deploying the contract?`,ask.yesno);
 
-  if (isDeployer) {
+  if (isAlice) {
     const maxAddr = parseInt(await ask.ask(`How many addresses may be added to the whitelist?`));
     const tokPerAddress = parseInt(await ask.ask(`How many tokens may be claimed per address?`));
 
@@ -23,16 +23,16 @@ const stdlib = loadStdlib();
     await claimtok.mint(acc, (maxAddr * tokPerAddress));
 
     console.log('Deploying the contract...');
-    const ctcDeployer = await acc.contract(backend);
+    const ctcAlice = await acc.contract(backend);
 
     await Promise.all([
-      backend.Deployer(ctcDeployer, {
+      backend.Alice(ctcAlice, {
         setParams: function() {
           return [ claimtok.id, maxAddr, tokPerAddress ];
         },
         fundContract: async function() {
           console.log(`The contract has been funded.`);
-          const ctcInfoD = JSON.stringify(await ctcDeployer.getInfo());
+          const ctcInfoD = JSON.stringify(await ctcAlice.getInfo());
           console.log(`The contract has deployed as: ${ctcInfoD}`);
         },
         seeAddToWhitelist: function(addr) {

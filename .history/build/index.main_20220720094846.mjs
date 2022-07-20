@@ -284,11 +284,11 @@ export async function _AdminAPI_endContract5(ctcTop, interact) {
   
   
   };
-export async function Alice(ctcTop, interact) {
+export async function Deployer(ctcTop, interact) {
   if (typeof(ctcTop) !== 'object' || ctcTop._initialize === undefined) {
-    return Promise.reject(new Error(`The backend for Alice expects to receive a contract as its first argument.`));}
+    return Promise.reject(new Error(`The backend for Deployer expects to receive a contract as its first argument.`));}
   if (typeof(interact) !== 'object') {
-    return Promise.reject(new Error(`The backend for Alice expects to receive an interact object as its second argument.`));}
+    return Promise.reject(new Error(`The backend for Deployer expects to receive an interact object as its second argument.`));}
   const ctc = ctcTop._initialize();
   const stdlib = ctc.stdlib;
   const ctc0 = stdlib.T_Null;
@@ -325,7 +325,7 @@ export async function Alice(ctcTop, interact) {
     at: './index.rsh:35:89:application',
     fs: ['at ./index.rsh:34:16:application call to [unknown function] (defined at: ./index.rsh:34:20:function exp)'],
     msg: 'setParams',
-    who: 'Alice'
+    who: 'Deployer'
     });
   const v341 = v340[stdlib.checkedBigNumberify('./index.rsh:35:89:application', stdlib.UInt_max, '0')];
   const v342 = v340[stdlib.checkedBigNumberify('./index.rsh:35:89:application', stdlib.UInt_max, '1')];
@@ -431,13 +431,13 @@ export async function Alice(ctcTop, interact) {
     at: './index.rsh:41:12:dot',
     fs: [],
     msg: 'sender correct',
-    who: 'Alice'
+    who: 'Deployer'
     });
   stdlib.protect(ctc0, await interact.fundContract(), {
     at: './index.rsh:44:33:application',
     fs: ['at ./index.rsh:44:33:application call to [unknown function] (defined at: ./index.rsh:44:33:function exp)', 'at ./index.rsh:44:33:application call to "liftedInteract" (defined at: ./index.rsh:44:33:application)'],
     msg: 'fundContract',
-    who: 'Alice'
+    who: 'Deployer'
     });
   
   const txn3 = await (ctc.sendrecv({
@@ -507,7 +507,7 @@ export async function Alice(ctcTop, interact) {
     at: './index.rsh:45:12:dot',
     fs: [],
     msg: 'sender correct',
-    who: 'Alice'
+    who: 'Deployer'
     });
   let v386 = false;
   let v387 = stdlib.checkedBigNumberify('./index.rsh:53:80:decimal', stdlib.UInt_max, '0');
@@ -538,7 +538,7 @@ export async function Alice(ctcTop, interact) {
           at: './index.rsh:99:18:application',
           fs: ['at ./index.rsh:98:22:application call to [unknown function] (defined at: ./index.rsh:98:22:function exp)'],
           msg: null,
-          who: 'Alice'
+          who: 'Deployer'
           });
         const v442 = true;
         await txn4.getOutput('AdminAPI_endContract', 'v442', ctc1, v442);
@@ -570,7 +570,7 @@ export async function Alice(ctcTop, interact) {
             at: './index.rsh:65:48:application',
             fs: ['at ./index.rsh:65:48:application call to [unknown function] (defined at: ./index.rsh:65:48:function exp)', 'at ./index.rsh:65:48:application call to "liftedInteract" (defined at: ./index.rsh:65:48:application)', 'at ./index.rsh:60:22:application call to [unknown function] (defined at: ./index.rsh:60:22:function exp)'],
             msg: 'seeAddToWhitelist',
-            who: 'Alice'
+            who: 'Deployer'
             });
           
           const v525 = stdlib.add(v387, stdlib.checkedBigNumberify('./index.rsh:67:49:decimal', stdlib.UInt_max, '1'));
@@ -641,7 +641,7 @@ export async function Alice(ctcTop, interact) {
             at: './index.rsh:85:41:application',
             fs: ['at ./index.rsh:85:41:application call to [unknown function] (defined at: ./index.rsh:85:41:function exp)', 'at ./index.rsh:85:41:application call to "liftedInteract" (defined at: ./index.rsh:85:41:application)', 'at ./index.rsh:78:22:application call to [unknown function] (defined at: ./index.rsh:78:22:function exp)'],
             msg: 'seeClaim',
-            who: 'Alice'
+            who: 'Deployer'
             });
           
           const cv386 = v386;
@@ -1275,7 +1275,7 @@ export const _Connectors = {
   };
 export const _Participants = {
   "AdminAPI_endContract": AdminAPI_endContract,
-  "Alice": Alice,
+  "Deployer": Deployer,
   "UserAPI_addToWhitelist": UserAPI_addToWhitelist,
   "UserAPI_claimTokens": UserAPI_claimTokens
   };

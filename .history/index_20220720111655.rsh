@@ -8,7 +8,7 @@ export const main = Reach.App(() => {
 
   setOptions({ connectors: [ ALGO ], untrustworthyMaps: true });
   
-  const Deployer = Participant('Deployer', {
+  const Alice = Participant('Alice', {
     setParams: Fun([], Tuple(Token, UInt, UInt)), 
     fundContract: Fun([], Null),
     seeAddToWhitelist: Fun([Address], Null),
@@ -31,18 +31,18 @@ export const main = Reach.App(() => {
 
   init();
 
-  Deployer.only(() => {
+  Alice.only(() => {
     const [ ClaimToken, MaxAddresses, TokensPerAddress ] = declassify(interact.setParams());
     const TotalTokens = (MaxAddresses * TokensPerAddress);
   });
-  Deployer.publish(ClaimToken, MaxAddresses, TokensPerAddress, TotalTokens);
+  Alice.publish(ClaimToken, MaxAddresses, TokensPerAddress, TotalTokens);
   commit();
 
-  Deployer.publish().pay([0, [TotalTokens, ClaimToken]]);
+  Alice.publish().pay([0, [TotalTokens, ClaimToken]]);
   commit();
 
-  Deployer.interact.fundContract();
-  Deployer.publish();
+  Alice.interact.fundContract();
+  Alice.publish();
 
   const whitelist = new Map(Bool);
 
@@ -61,7 +61,7 @@ export const main = Reach.App(() => {
           returnFunc(canAdd);
           if (canAdd) {
             whitelist[this] = true;
-            Deployer.interact.seeAddToWhitelist(this);
+            Alice.interact.seeAddToWhitelist(this);
           }
           const whitelistIncrement = (canAdd) ? 1 : 0;
 
@@ -81,7 +81,7 @@ export const main = Reach.App(() => {
           if (canWithdraw) {
               transfer([0, [TokensPerAddress, ClaimToken]]).to(this);
               whitelist[this] = false;
-              Deployer.interact.seeClaim(this);
+              Alice.interact.seeClaim(this);
           }
           const claimedTokens = (canWithdraw) ? TokensPerAddress : 0;
 
@@ -91,19 +91,19 @@ export const main = Reach.App(() => {
       .api(
         AdminAPI.endContract,
         () => {
-          assume(this == Deployer);
+          assume(this == Alice);
         },
         () => 0,
         (returnFunc) => {
-          require(this == Deployer);
+          require(this == Alice);
           returnFunc(true);
 
           return [ true, distrubtedTokens, whitelistSize ];
         }
       );
 
-      transfer(balance()).to(Deployer);
-      transfer([ 0, [ balance(ClaimToken), ClaimToken ] ]).to(Deployer);
+      transfer(balance()).to(Alice);
+      transfer([ 0, [ balance(ClaimToken), ClaimToken ] ]).to(Alice);
       commit();
 
   exit();

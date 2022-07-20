@@ -12,7 +12,7 @@ const stdlib = loadStdlib();
   console.log(`Account ${addr} has been generated.`);
   console.log(`Account has been generated with ${await getBalance(acc)} tokens and address ${addr}`);
 
-  const isAlice = await ask.ask(`Deploying the contract...`,ask.yesno);
+  const isAlice = await ask.ask(`Are you deploying the contract?`,ask.yesno);
 
   if (isAlice) {
     const maxAddr = parseInt(await ask.ask(`How many addresses may be added to the whitelist?`));
