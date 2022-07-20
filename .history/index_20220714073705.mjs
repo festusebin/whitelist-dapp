@@ -5,15 +5,15 @@ import * as backend from './build/index.main.mjs';
   if ( stdlib.connector === 'ALGO' ) { process.exit(0); }
   const startingBalance = stdlib.parseCurrency(100);
 
-  const accAlice = await stdlib.newTestAccount(startingBalance);
+  const acc = await stdlib.newTestAccount(startingBalance);
   const accBob = await stdlib.newTestAccount(startingBalance);
 
   const getBalance = async (who) =>
         stdlib.formatCurrency(await stdlib.balanceOf(who), 4);
-  const beforeAlice = await getBalance(accAlice);
+  const beforeAlice = await getBalance(acc);
   const beforeBob = await getBalance(accBob);
 
-  const ctcAlice = accAlice.contract(backend);
+  const ctcAlice = acc.contract(backend);
   const ctcBob = accBob.contract(backend, ctcAlice.getInfo());
 
   const thePass = stdlib.bigNumberify('31916810322672614595785596490503352186605157015187771518249890054489700143553');
@@ -33,7 +33,7 @@ import * as backend from './build/index.main.mjs';
     }),
   ]);
 
-  const afterAlice = await getBalance(accAlice);
+  const afterAlice = await getBalance(acc);
   const afterBob = await getBalance(accBob);
 
   console.log(`Alice went from ${beforeAlice} to ${afterAlice}.`);
